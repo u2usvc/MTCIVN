@@ -1,16 +1,15 @@
-# resource "libvirt_network" "link-111" {
-#   name      = "link-111"
-#   mode      = "none"
-#   bridge    = "mtcivnbr111"
-# }
-
-resource "libvirt_network" "links" {
-  for_each = {
-    for id in var.network_ids : "link-${id}" => id
-  }
-
-  name   = each.key
-  mode   = "none"
-  bridge = "mtcivnbr${each.value}"
+locals {
+  network_ids = distinct([
+    for each in values(var.domain_map) : each.net
+  ])
 }
 
+resource "libvirt_network" "links" {
+  for_each = toset(local.network_ids)
+
+  # key == link-111
+  name   = each.key
+  mode   = "none"
+  # bridge == mtcivnbr111
+  bridge = replace(each.key, "link-", "mtcivnbr")
+}

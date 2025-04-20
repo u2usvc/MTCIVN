@@ -8,16 +8,16 @@ terraform {
   }
 }
 
-#################################
-### Providers
-#################################
+#################
+### Providers ###
+#################
 provider "libvirt" {
   uri = "qemu:///system"
 }
 
-#################################
-### Variables
-#################################
+#################
+### Variables ###
+#################
 variable "hosts" {
   default = 5
 }
@@ -37,9 +37,19 @@ variable "network_ids" {
   ]
 }
 
-#################################
-### Resources
-#################################
+variable "domain_map" {
+  default = {
+    "link-112-1" = { net = "link-112", vol_index = 0 },
+    "link-112-2" = { net = "link-112", vol_index = 1 },
+    "link-113-1" = { net = "link-113", vol_index = 2 },
+    "link-113-2" = { net = "link-113", vol_index = 3 },
+    # ...
+  }
+}
+
+#################
+### Resources ###
+#################
 ### POOL
 resource "libvirt_pool" "mtcivn_pool" {
   name = "mtcivn_pool"
@@ -52,10 +62,10 @@ resource "libvirt_pool" "mtcivn_pool" {
 
 ### VOLUMES
 resource "libvirt_volume" "mt-chr_vol" {
-  name             = "${format(var.hostname_format, count.index + 1)}.qcow2"
-  count            = var.hosts
-  source           = "./images/chr-7.18.2.qcow2"
-  pool             = "mtcivn_pool"
-  format           = "qcow2"
-  depends_on       = [libvirt_pool.mtcivn_pool]
+  count       = length(var.domain_map)
+  name        = "${format(var.hostname_format, count.index + 1)}.qcow2"
+  source      = "./images/chr-7.18.2.qcow2"
+  pool        = "mtcivn_pool"
+  format      = "qcow2"
+  depends_on  = [libvirt_pool.mtcivn_pool]
 }

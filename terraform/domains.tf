@@ -1,29 +1,22 @@
-resource "libvirt_domain" "mt-ros" {
-  count  = var.hosts
-  name   = format(var.hostname_format, count.index + 1)
-  # vcpu =
-  # memory =
+resource "libvirt_domain" "mt_ros" {
+  for_each = var.domain_map
+
+  name = each.key
 
   cpu {
-      mode = "host-passthrough"
-    }
-
-  coreos_ignition = element(libvirt_ignition.ignition.*.id, count.index)
-
-  disk {
-    volume_id = element(libvirt_volume.coreos-disk.*.id, count.index)
+    mode = "host-passthrough"
   }
 
-  # Makes the tty0 available via `virsh console`
+  disk {
+    volume_id = libvirt_volume.mt-chr_vol[each.value.vol_index].id
+  }
+
   console {
     type = "pty"
     target_port = "0"
   }
 
   network_interface {
-    network_name   = "fcos_k8s_lab"
-    wait_for_lease = true
-    mac            = element(var.mac_addresses, count.index)
+    network_id = libvirt_network.links[each.value.net].id
   }
 }
-
