@@ -1,4 +1,3 @@
-### DOMAIN
 resource "libvirt_domain" "mt-ros" {
   count  = var.hosts
   name   = format(var.hostname_format, count.index + 1)
@@ -28,20 +27,3 @@ resource "libvirt_domain" "mt-ros" {
   }
 }
 
-### NETWORK
-resource "libvirt_network" "fcos_k8s_lab" {
-  name      = "fcos_k8s_lab"
-  mode      = "nat"
-  bridge    = "k8sbr0"
-  domain    = "k8s.local"
-  addresses = ["192.168.122.0/24"]
-  dhcp {
-    enabled = true
-  }
-  dns {
-    enabled = true
-    forwarders {
-      address = "1.1.1.1"
-    }
-  }
-}

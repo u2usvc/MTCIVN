@@ -27,6 +27,16 @@ variable "hostname_format" {
   default = "MT-CHR-%02d"
 }
 
+variable "network_ids" {
+  default = [
+    112, 113, 114,
+    121, 122,
+    131, 132,
+    211,
+    221
+  ]
+}
+
 #################################
 ### Resources
 #################################
