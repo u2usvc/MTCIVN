@@ -29,7 +29,7 @@ variable "hostname_format" {
 
 variable "network_ids" {
   default = [
-    112, 113, 114,
+    111, 112, 113, 114,
     121, 122,
     131, 132,
     211,
