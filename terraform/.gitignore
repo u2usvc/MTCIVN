@@ -1,3 +1,4 @@
 images/*
 .terraform/*
 .terraform*
+terraform.tfstate.backup
