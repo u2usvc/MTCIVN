@@ -9,4 +9,8 @@
       community.routeros.command:
         commands:
           - /system identity set name=MT-CHR-5
+    - name: adjust console settings
+      community.routeros.command:
+        commands:
+          - /system console screen set blank-interval=never line-count=40
 
