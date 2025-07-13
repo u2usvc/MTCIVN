@@ -18,32 +18,24 @@ provider "libvirt" {
 #################
 ### Variables ###
 #################
-variable "hosts" {
-  default = 5
-}
-
 variable "hostname_format" {
   type    = string
   default = "MT-CHR-%02d"
 }
 
-variable "network_ids" {
-  default = [
-    111, 112, 113, 114,
-    121, 122,
-    131, 132,
-    211,
-    221
-  ]
-}
-
+############ "cidr" can be *any of* the networks' host is connected to (should match CIDR of the first network in the "net" array)
+############ "net" should be an array of networks' host is connected to
+#                                                     L-2 34 -2
+# "L-234-2" = { net = "L-234", vol_index = X, ip = "10.12.34.12", cidr = "10.12.34.0/24" },
+# "L-345-1" = { net = "L-345", vol_index = X, ip = "10.13.45.11", cidr = "10.13.45.0/24" },
 variable "domain_map" {
   default = {
-    "link-112-1" = { net = "link-112", vol_index = 0 },
-    "link-112-2" = { net = "link-112", vol_index = 1 },
-    "link-113-1" = { net = "link-113", vol_index = 2 },
-    "link-113-2" = { net = "link-113", vol_index = 3 },
-    # ...
+    "L-111-2" = { net = ["L-111"], vol_index = 0, ip = ["10.11.11.12"], cidr = "10.11.11.0/24" },
+    "L-112-2" = { net = ["L-112"], vol_index = 1, ip = ["10.11.12.12"], cidr = "10.11.12.0/24" },
+    "L-113-2" = { net = ["L-113"], vol_index = 2, ip = ["10.11.13.12"], cidr = "10.11.13.0/24" },
+    "L-114-2" = { net = ["L-114"], vol_index = 3, ip = ["10.11.14.12"], cidr = "10.11.14.0/24" },
+    "L-111_2_3_4-1" = { net = ["L-111","L-112","L-113","L-114"], vol_index = 4, ip = ["10.11.11.11","10.11.12.11","10.11.13.11","10.11.14.11"], cidr = "10.11.11.0/24" },
+
   }
 }
 
