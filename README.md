@@ -18,10 +18,17 @@ Each network should create a bridge VNI, for example:
 ```
 
 ## Prerequisites
-- ensure venv is setup under ./ansible/ 
-- ensure `. ./bin/activate`
-- `pip install ansible ansible-pylibssh`
-- invoke ansible through python `python3 -m ansible playbook -i ./inventory.ini ./playbook.yml`. Pay attention to warnings
+```bash
+cd ansible
+python -m venv ./
+. ./bin/activate
+pip install ansible ansible-pylibssh
+```
 
 ## Note
 - in order to add hosts - edit `./terraform/main.tf -> domain_map`
+
+## Usage
+```
+./setup.sh
+```

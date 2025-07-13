@@ -30,11 +30,12 @@ echo -e "${YELLOW}###########################################${NC}"
 echo -e "${YELLOW}[X] Destroying existing plan if any${NC}"
 echo -e "${YELLOW}###########################################${NC}"
 sleep 3
-sudo terraform destroy -auto-approve
+terraform destroy -auto-approve
 echo -e "${YELLOW}###########################################${NC}"
 echo -e "${YELLOW}[X] Providing the cluster${NC}"
 echo -e "${YELLOW}###########################################${NC}"
-sudo terraform apply -auto-approve && echo -e "${GREEN}[+] Cluster is deployed${NC}"
+sleep 4
+terraform apply -auto-approve && echo -e "${GREEN}[+] Cluster is deployed${NC}"
 
 echo -e "${YELLOW}###########################################${NC}"
 echo -e "${YELLOW}[X] About to provision the cluster${NC}"
@@ -42,8 +43,9 @@ echo -e "${YELLOW}[X] Passing execution flow to Ansible${NC}"
 echo -e "${YELLOW}###########################################${NC}"
 sleep 4
 cd ../ansible/
+. ./bin/activate
 
 sed -i '/192.168.122.101\|192.168.122.102\|192.168.122.103\|192.168.122.104/d' ~/.ssh/known_hosts
-ansible-playbook -i inventory.ini ./playbook.yaml
+python3 -m ansible playbook -i ./inventory.ini ./initial.yml
 
 cd ../
