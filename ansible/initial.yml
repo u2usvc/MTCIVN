@@ -1,0 +1,22 @@
+---
+- name: set admin password and confirm license
+  hosts: all
+  connection: network_cli
+  gather_facts: false
+  tasks:
+    - name: Set MikroTik admin password
+      ansible.builtin.shell: >
+        ssh -o StrictHostKeyChecking=no -o CheckHostIP=no -o PubkeyAuthentication=no -o UserKnownHostsFile=/dev/null -o PubkeyAuthentication=no admin@{{ ansible_host }} '/user/set [find name={{ ansible_user }}] password={{ ansible_password }}; /system/identity/set name={{ inventory_hostname }}'
+      delegate_to: localhost
+      vars:
+        ansible_connection: local
+
+    - name: Wait for MikroTik to reset connection after password change
+      ansible.builtin.pause:
+        seconds: 5
+
+    - name: Confirm License if needed in order for routeros.command to work
+      ansible.netcommon.cli_command:
+        command: "sshpass -p {{ ansible_password }} ssh -o UserKnownHostsFile=/dev/null -o PubkeyAuthentication=no -o StrictHostKeyChecking=no {{ ansible_user }}@{{ ansible_host }}"
+        prompt: Do you want to see the software license\?
+        answer: n
