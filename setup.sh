@@ -46,6 +46,6 @@ cd ../ansible/
 . ./bin/activate
 
 sed -i '/192.168.122.101\|192.168.122.102\|192.168.122.103\|192.168.122.104/d' ~/.ssh/known_hosts
-python3 -m ansible playbook -i ./inventory.ini ./initial.yml
+python3 -m ansible playbook -i ./inventory.ini ./imports.yml
 
 cd ../
