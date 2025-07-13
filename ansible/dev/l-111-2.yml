@@ -1,0 +1,11 @@
+---
+- name: configure L-111-2
+  hosts:
+    - l-111-2
+  connection: network_cli
+  gather_facts: false
+  tasks:
+    - name: set identity
+      community.routeros.command:
+        commands:
+          - /system identity set name=MT-CHR-7

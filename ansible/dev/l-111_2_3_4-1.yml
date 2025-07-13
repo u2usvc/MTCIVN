@@ -1,0 +1,12 @@
+---
+- name: configure L-111_2_3_4-1
+  hosts:
+    - l-111_2_3_4-1
+  connection: network_cli
+  gather_facts: false
+  tasks:
+    - name: set identity
+      community.routeros.command:
+        commands:
+          - /system identity set name=MT-CHR-5
+
