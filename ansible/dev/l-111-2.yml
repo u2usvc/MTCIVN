@@ -20,3 +20,34 @@
           - /ip address add address=10.11.11.12/24 interface=ether1 network=10.11.11.0 
 
 
+    - name: integrate OSPF
+      block:
+        - name: add loopback bridge
+          community.routeros.command:
+            commands:
+              - /interface bridge add name=Lo0
+
+        - name: add loopback address
+          community.routeros.command:
+            commands:
+              - /ip address add address=10.0.0.7 interface=Lo0 network=10.0.0.7
+
+        - name: add OSPF instance
+          community.routeros.command:
+            commands:
+              - /routing ospf instance add disabled=no name=ospfv2-inst router-id=10.0.0.7
+
+        - name: add OSPF area
+          community.routeros.command:
+            commands:
+              - /routing ospf area add disabled=no instance=ospfv2-inst name=ospfv2-a0
+
+        - name: add OSPF interface-template for L-111
+          community.routeros.command:
+            commands:
+              - /routing ospf interface-template add area=ospfv2-a0 disabled=no interfaces=Lo0,ether1 networks=10.11.11.0/24,10.0.0.7/32 use-bfd=yes
+
+        - name: add BFD
+          community.routeros.command:
+            commands:
+              - /routing bfd configuration add interfaces=ether1 min-rx=1s min-tx=1s
