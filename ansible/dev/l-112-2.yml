@@ -13,3 +13,8 @@
       community.routeros.command:
         commands:
           - /system console screen set blank-interval=never line-count=40
+
+    - name: assign addresses
+      community.routeros.command:
+        commands:
+          - /ip address add address=10.11.12.12/24 interface=ether1 network=10.11.12.0
