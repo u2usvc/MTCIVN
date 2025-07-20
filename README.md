@@ -1,7 +1,7 @@
 ## About
-Intentionally vulnerable environment built using MikroTik RouterOS images.
+Lab environment built using MikroTik RouterOS images with future plans to integrate JunOS.
 
-Each XXX-CHR.tf file represents a link. The network topology is attached.
+Each l-XXX.tf file represents a link. The network topology is attached.
 `mode="none"` is supplied so that networks will not be able to communicate with the host LAN.
 
 each domain definition should create an attached VNI. For example this one is attached to mtcivnbr112 bridge:
