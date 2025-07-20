@@ -8,7 +8,7 @@
     - name: set identity
       community.routeros.command:
         commands:
-          - /system identity set name=MT-CHR-6
+          - /system identity set name=MT-CHR-L112-H2
     - name: adjust console settings
       community.routeros.command:
         commands:
