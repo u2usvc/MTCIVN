@@ -1,3 +1,10 @@
 DEV_README.md
 terraform.tfstate
 **/SFD/
+**/*.norg
+**/pyvenv.cfg
+**/bin/
+**/lib/
+**/lib64
+**/include/
+**/*.jpg
