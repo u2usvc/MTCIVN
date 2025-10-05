@@ -23,6 +23,13 @@ Each network should create a bridge VNI, for example:
 
 ## Prerequisites
 
+Ensure terraform and xsltproc is installed.
+
+```bash
+cd terraform
+terraform init -upgrade
+```
+
 ```bash
 cd ansible
 python -m venv ./
