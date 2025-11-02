@@ -1,23 +1,23 @@
 ---
-- name: configure L-113-2
+- name: configure L-111-2_121-1
   hosts:
-    - l-113-2
+    - L-111-2_121-1
   connection: network_cli
   gather_facts: false
   tasks:
     - name: set identity
       community.routeros.command:
         commands:
-          - /system identity set name=MT-CHR-L113-H2
+          - /system identity set name=MT-CHR-111-2_121-1
     - name: adjust console settings
       community.routeros.command:
         commands:
           - /system console screen set blank-interval=never line-count=40
 
-    - name: assign addresses
+    - name: link with l-111_2_3_4-1
       community.routeros.command:
         commands:
-          - /ip address add address=10.11.13.12/24 interface=ether1 network=10.11.13.0
+          - /ip address add address=10.11.11.12/24 interface=ether1 network=10.11.11.0
 
     - name: integrate OSPF
       block:
@@ -29,22 +29,22 @@
         - name: add loopback address
           community.routeros.command:
             commands:
-              - /ip address add address=10.0.0.8 interface=Lo0 network=10.0.0.8
+              - /ip address add address=10.0.0.7 interface=Lo0 network=10.0.0.7
 
         - name: add OSPF instance
           community.routeros.command:
             commands:
-              - /routing ospf instance add disabled=no name=ospfv2-inst router-id=10.0.0.8
+              - /routing ospf instance add disabled=no name=ospfv2-inst router-id=10.0.0.7
 
         - name: add OSPF area
           community.routeros.command:
             commands:
               - /routing ospf area add disabled=no instance=ospfv2-inst name=ospfv2-a0
 
-        - name: add OSPF interface-template for L-113
+        - name: add OSPF interface-template for L-111
           community.routeros.command:
             commands:
-              - /routing ospf interface-template add area=ospfv2-a0 disabled=no interfaces=Lo0,ether1 networks=10.11.13.0/24,10.0.0.8/32 use-bfd=yes
+              - /routing ospf interface-template add area=ospfv2-a0 disabled=no interfaces=Lo0,ether1 networks=10.11.11.0/24,10.0.0.7/32 use-bfd=yes
 
         - name: add BFD
           community.routeros.command:

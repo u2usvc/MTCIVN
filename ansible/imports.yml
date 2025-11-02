@@ -1,9 +1,0 @@
----
-- import_playbook: initial.yml
-
-# dev
-- import_playbook: dev/l-111_2_3_4-1.yml
-- import_playbook: dev/l-111-2.yml
-- import_playbook: dev/l-112-2.yml
-- import_playbook: dev/l-113-2.yml
-- import_playbook: dev/l-114-2.yml
