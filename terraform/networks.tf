@@ -19,8 +19,8 @@ resource "libvirt_network" "links" {
   for_each = toset(local.network_ids)
 
   # key == link-111
-  name   = each.key
-  mode   = "none"
+  name = each.key
+  mode = "none"
   # bridge == mtcivnbr111
   bridge = "mtbr${replace(each.key, "L-", "")}"
   # bridge = replace(each.key, "L-", "mtbr")
@@ -32,7 +32,7 @@ resource "libvirt_network" "links" {
   addresses = slice(compact(
     [
       # Access the network configuration based on the net value in the domain_map
-      for key, value in var.domain_map : 
+      for key, value in var.domain_map :
       # if value.net (var.domain_map.value.net) == each.key (network_ids), then return value.cidr (var.domain_map.value.cidr)
       value.net[0] == each.key ? value.cidr : null
     ]

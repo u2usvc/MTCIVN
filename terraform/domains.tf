@@ -12,7 +12,7 @@ resource "libvirt_domain" "mt_ros" {
   }
 
   console {
-    type = "pty"
+    type        = "pty"
     target_port = "0"
   }
 
@@ -27,8 +27,8 @@ resource "libvirt_domain" "mt_ros" {
     # e.g. { "L-111" = "10.11.11.11", "L-112" = "10.11.12.11", ... }
     for_each = zipmap(each.value.net, each.value.ip)
     content {
-      network_id     = libvirt_network.links[network_interface.key].id
-      addresses      = [network_interface.value]
+      network_id = libvirt_network.links[network_interface.key].id
+      addresses  = [network_interface.value]
       # because some nodes have multiple addresses assigned
       # and by default MT-CHR only has dhcp-client on ether1 
       # by default if wait_for_lease is set to `true` it will 

@@ -19,7 +19,6 @@
         commands:
           - /ip address add address=10.11.13.12/24 interface=ether1 network=10.11.13.0
 
-
     - name: integrate OSPF
       block:
         - name: add loopback bridge

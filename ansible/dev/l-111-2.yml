@@ -17,8 +17,7 @@
     - name: link with l-111_2_3_4-1
       community.routeros.command:
         commands:
-          - /ip address add address=10.11.11.12/24 interface=ether1 network=10.11.11.0 
-
+          - /ip address add address=10.11.11.12/24 interface=ether1 network=10.11.11.0
 
     - name: integrate OSPF
       block:
