@@ -1,0 +1,15 @@
+---
+- name: configure L-121-2_122-2
+  hosts:
+    - L-121-2_122-2
+  connection: network_cli
+  gather_facts: false
+  tasks:
+    - name: set identity
+      community.routeros.command:
+        commands:
+          - /system identity set name=MT-CHR-121-2_122-2
+    - name: adjust console settings
+      community.routeros.command:
+        commands:
+          - /system console screen set blank-interval=never line-count=40
