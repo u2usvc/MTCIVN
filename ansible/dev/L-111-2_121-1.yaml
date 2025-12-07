@@ -14,10 +14,11 @@
         commands:
           - /system console screen set blank-interval=never line-count=40
 
-    - name: link with l-111_2_3_4-1
+    - name: assign an address
       community.routeros.command:
         commands:
           - /ip address add address=10.11.11.12/24 interface=ether1 network=10.11.11.0
+          - /ip address add address=10.11.21.11/24 interface=ether2 network=10.11.21.0
 
     - name: integrate OSPF
       block:
