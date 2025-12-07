@@ -41,7 +41,11 @@ pip install ansible ansible-pylibssh
 
 ## Note
 
-- in order to add hosts - edit `./terraform/main.tf -> domain_map`
+In order to add hosts:
+
+- edit `./terraform/main.tf -> domain_map`
+- add config file to `./ansible/dev/`
+- add subnet to `./ansible/inventory.ini` (do not `ansible_host` already defined machines)
 
 ## Usage
 
