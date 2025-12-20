@@ -1,14 +1,14 @@
 ---
-- name: configure L-113-2
+- name: configure L-113-2_132-1
   hosts:
-    - L-113-2
+    - L-113-2_132-1
   connection: network_cli
   gather_facts: false
   tasks:
     - name: set identity
       community.routeros.command:
         commands:
-          - /system identity set name=MT-CHR-113-2
+          - /system identity set name=MT-CHR-113-2_132-1
     - name: adjust console settings
       community.routeros.command:
         commands:
@@ -18,6 +18,7 @@
       community.routeros.command:
         commands:
           - /ip address add address=10.11.13.12/24 interface=ether1 network=10.11.13.0
+          - /ip address add address=10.11.32.11/24 interface=ether2 network=10.11.32.0
 
     - name: integrate OSPF
       block:
@@ -44,7 +45,7 @@
         - name: add OSPF interface-template for L-113
           community.routeros.command:
             commands:
-              - /routing ospf interface-template add area=ospfv2-a0 disabled=no interfaces=Lo0,ether1 networks=10.11.13.0/24,10.0.0.8/32 use-bfd=yes
+              - /routing ospf interface-template add area=ospfv2-a0 disabled=no interfaces=Lo0,ether1,ether2 networks=10.11.13.0/24,10.11.32.0/24,10.0.0.8/32 use-bfd=yes
 
         - name: add BFD
           community.routeros.command:

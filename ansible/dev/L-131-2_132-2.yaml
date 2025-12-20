@@ -1,0 +1,53 @@
+---
+- name: configure L-131-2_132-2
+  hosts:
+    - L-131-2_132-2
+  connection: network_cli
+  gather_facts: false
+  tasks:
+    - name: set identity
+      community.routeros.command:
+        commands:
+          - /system identity set name=MT-CHR-131-2_132-2
+    - name: adjust console settings
+      community.routeros.command:
+        commands:
+          - /system console screen set blank-interval=never line-count=40
+
+    - name: assign addresses
+      community.routeros.command:
+        commands:
+          - /ip address add address=10.11.31.12/24 interface=ether1 network=10.11.31.0
+          - /ip address add address=10.11.32.12/24 interface=ether2 network=10.11.32.0
+
+    - name: integrate OSPF
+      block:
+        - name: add loopback bridge
+          community.routeros.command:
+            commands:
+              - /interface bridge add name=Lo0
+
+        - name: add loopback address
+          community.routeros.command:
+            commands:
+              - /ip address add address=10.0.0.4 interface=Lo0 network=10.0.0.4
+
+    - name: add OSPF instance
+      community.routeros.command:
+        commands:
+          - /routing ospf instance add disabled=no name=ospfv2-inst router-id=10.0.0.4
+
+    - name: add OSPF area
+      community.routeros.command:
+        commands:
+          - /routing ospf area add disabled=no instance=ospfv2-inst name=ospfv2-a0
+
+    - name: add OSPF interface-template
+      community.routeros.command:
+        commands:
+          - /routing ospf interface-template add area=ospfv2-a0 disabled=no interfaces=Lo0,ether1,ether2 networks=10.11.31.0/24,10.11.32.0/24,10.0.0.4/32 use-bfd=yes
+
+    - name: add BFD
+      community.routeros.command:
+        commands:
+          - /routing bfd configuration add interfaces=ether1,ether2 min-rx=1s min-tx=1s
