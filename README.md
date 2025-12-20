@@ -43,9 +43,12 @@ pip install ansible ansible-pylibssh
 
 In order to add hosts:
 
-- edit `./terraform/main.tf -> domain_map`
+- edit `./terraform/main.tf -> domain_map` to add hosts and connections between them
 - add config file to `./ansible/dev/`
 - add subnet to `./ansible/inventory.ini` (do not `ansible_host` already defined machines)
+- add config file to `./ansible/imports.yaml`
+
+dnsmasq started by libvirt assigns an IP to ether1 for each VM in order for ansible to work, however I still set ether1 address in ansible playbooks for the sake of verbosity.
 
 ## Usage
 
