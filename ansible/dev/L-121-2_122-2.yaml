@@ -17,6 +17,7 @@
     - name: assign addresses
       community.routeros.command:
         commands:
+          - /ip address add address=10.11.21.12/24 interface=ether1 network=10.11.21.0
           - /ip address add address=10.11.22.12/24 interface=ether2 network=10.11.22.0
 
     - name: integrate OSPF
