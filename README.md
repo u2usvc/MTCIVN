@@ -1,8 +1,8 @@
 ## About
 
-Lab environment built using MikroTik RouterOS images with future plans to integrate JunOS.
+Lab environment built using MikroTik RouterOS CHR images.
 
-Each l-XXX.tf file represents a link. The network topology is attached.
+Each l-XXX.tf file represents a link.
 `mode="none"` is supplied so that networks will not be able to communicate with the host LAN.
 
 each domain definition should create an attached VNI. For example this one is attached to mtcivnbr112 bridge:
@@ -55,3 +55,5 @@ dnsmasq started by libvirt assigns an IP to ether1 for each VM in order for ansi
 ```
 ./setup.sh
 ```
+
+Devices are accessible using `admin:packer` credentials over ssh. Addresses exposed to host are listed under `./ansible/inventory.ini`.
