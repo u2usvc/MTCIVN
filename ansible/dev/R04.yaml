@@ -1,14 +1,14 @@
 ---
 - name: configure host
   hosts:
-    - R04_MT_AS6200_131-2_132-2
+    - R04
   connection: network_cli
   gather_facts: false
   tasks:
     - name: set identity
       community.routeros.command:
         commands:
-          - /system identity set name=R04_MT_AS6200_131-2_132-2
+          - /system identity set name=R04
     - name: adjust console settings
       community.routeros.command:
         commands:

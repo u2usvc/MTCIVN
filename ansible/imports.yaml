@@ -2,10 +2,10 @@
 - import_playbook: initial.yaml
 
 # dev
-- import_playbook: dev/R05_MT_AS6200_111-1_112-1_113-1_114-1.yaml
-- import_playbook: dev/R07_MT_AS6200_111-2_121-1.yaml
-- import_playbook: dev/R06_MT_AS6200_112-2_122-1.yaml
-- import_playbook: dev/R08_MT_AS6200_113-2_132-1.yaml
-- import_playbook: dev/R09_MT_AS6200_114-2_131-1.yaml
-- import_playbook: dev/R03_MT_AS6200_121-2_122-2.yaml
-- import_playbook: dev/R04_MT_AS6200_131-2_132-2.yaml
+- import_playbook: dev/R05.yaml
+- import_playbook: dev/R07.yaml
+- import_playbook: dev/R06.yaml
+- import_playbook: dev/R08.yaml
+- import_playbook: dev/R09.yaml
+- import_playbook: dev/R03.yaml
+- import_playbook: dev/R04.yaml
