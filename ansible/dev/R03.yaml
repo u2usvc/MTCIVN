@@ -17,8 +17,8 @@
     - name: assign addresses
       community.routeros.command:
         commands:
-          - /ip address add address=10.11.21.12/24 interface=ether1 network=10.11.21.0
-          - /ip address add address=10.11.22.12/24 interface=ether2 network=10.11.22.0
+          - /ip address add address=10.11.21.12/24 interface=ether2 network=10.11.21.0
+          - /ip address add address=10.11.22.12/24 interface=ether3 network=10.11.22.0
 
     - name: integrate OSPF
       block:
@@ -45,9 +45,9 @@
     - name: add OSPF interface-template
       community.routeros.command:
         commands:
-          - /routing ospf interface-template add area=ospfv2-a0 disabled=no interfaces=Lo0,ether1,ether2 networks=10.11.21.0/24,10.11.22.0/24,10.0.0.3/32 use-bfd=yes
+          - /routing ospf interface-template add area=ospfv2-a0 disabled=no interfaces=Lo0,ether2,ether3 networks=10.11.21.0/24,10.11.22.0/24,10.0.0.3/32 use-bfd=yes
 
     - name: add BFD
       community.routeros.command:
         commands:
-          - /routing bfd configuration add interfaces=ether1,ether2 min-rx=1s min-tx=1s
+          - /routing bfd configuration add interfaces=ether2,ether3 min-rx=1s min-tx=1s

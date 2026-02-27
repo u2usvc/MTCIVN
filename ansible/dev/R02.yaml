@@ -17,4 +17,4 @@
     - name: assign addresses
       community.routeros.command:
         commands:
-          - /ip address add address=172.16.11.12/24 interface=ether2 network=172.16.11.0
+          - /ip address add address=172.16.11.12/24 interface=ether3 network=172.16.11.0
