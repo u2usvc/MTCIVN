@@ -51,3 +51,12 @@
       community.routeros.command:
         commands:
           - /routing bfd configuration add interfaces=ether2,ether3 min-rx=1s min-tx=1s
+
+    - name: configure VXLAN
+      community.routeros.command:
+        commands:
+          - /interface/vxlan/add name=vxlan-vni-102 vni=102
+          - /interface/vxlan/vteps/add interface=vxlan-vni-102 remote-ip=10.0.0.4
+          - /interface/bridge/add name=vxlan-br-102
+          - /interface/bridge/port/add interface=ether4 bridge=vxlan-br-102
+          - /interface/bridge/port/add interface=vxlan-vni-102 bridge=vxlan-br-102
