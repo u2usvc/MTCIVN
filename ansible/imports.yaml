@@ -9,3 +9,5 @@
 - import_playbook: dev/R09.yaml
 - import_playbook: dev/R03.yaml
 - import_playbook: dev/R04.yaml
+- import_playbook: dev/R01.yaml
+- import_playbook: dev/R02.yaml

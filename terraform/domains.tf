@@ -24,11 +24,17 @@ resource "libvirt_domain" "mt_ros" {
   #
 
   dynamic "network_interface" {
-    # e.g. { "L-111" = "10.11.11.11", "L-112" = "10.11.12.11", ... }
-    for_each = zipmap(each.value.net, each.value.ip)
+    # Iterate directly over the 'net' array to preserve exact order
+    for_each = each.value.net
+
     content {
-      network_id = libvirt_network.links[network_interface.key].id
-      addresses  = [network_interface.value]
+      # network_interface.value is the network name (e.g., "L-323")
+      network_id = libvirt_network.links[network_interface.value].id
+
+      # network_interface.key is the index (e.g., 0). 
+      # We use it to grab the matching IP from the 'ip' array!
+      addresses  = [each.value.ip[network_interface.key]]
+
       # because some nodes have multiple addresses assigned
       # and by default MT-CHR only has dhcp-client on ether1 
       # by default if wait_for_lease is set to `true` it will 
