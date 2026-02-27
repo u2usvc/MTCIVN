@@ -1,5 +1,7 @@
 DEV_README.md
 terraform.tfstate
+*.drawio
+*.bkp
 **/SFD/
 **/*.norg
 **/pyvenv.cfg
