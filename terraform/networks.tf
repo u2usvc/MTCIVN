@@ -1,12 +1,15 @@
 locals {
   # leave only unique "net" (i.e. L-111, L-112, L-113)
-  # flatten merges all recursive list into a flat list 
-  # distinct removes duplicates
   network_ids = distinct(flatten([
     for d in values(var.domain_map) : d.net
   ]))
-}
 
+  # Create a map of ONLY the primary networks (index 0) to their respective CIDR.
+  # The `...` handles duplicates (e.g., if two routers share L-111 as a primary link).
+  primary_network_cidrs = {
+    for d in values(var.domain_map) : d.net[0] => d.cidr...
+  }
+}
 
 resource "libvirt_network" "links" {
   for_each = toset(local.network_ids)
@@ -15,14 +18,16 @@ resource "libvirt_network" "links" {
   mode   = "none"
   bridge = "mtbr${replace(each.key, "L-", "")}"
 
-  # pick the CIDR that corresponds to this network (as a single string)
-  addresses = slice(compact([
-    for key, value in var.domain_map :
-    contains(value.net, each.key) ? value.cidr[index(value.net, each.key)] : null
-  ]), 0, 1)
+  # If this network exists in our primary networks map, assign its CIDR.
+  # Otherwise, pass `null` to leave it as a pure L2 bridge.
+  addresses = contains(keys(local.primary_network_cidrs), each.key) ? [local.primary_network_cidrs[each.key][0]] : null
 
-  dhcp {
-    enabled = true
+  # Only render the DHCP block if this network has a CIDR assigned.
+  dynamic "dhcp" {
+    for_each = contains(keys(local.primary_network_cidrs), each.key) ? [1] : []
+    content {
+      enabled = true
+    }
   }
 
   xml {

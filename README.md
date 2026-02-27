@@ -43,7 +43,7 @@ pip install ansible ansible-pylibssh
 
 In order to add hosts:
 
-- edit `./terraform/main.tf -> domain_map` to add hosts and connections between them (`ip` and `cidr` are needed for dnsmasq DHCP server, if IP is not needed on the network, just put a placeholder address like `xxx.xxx.99.99/24`, it is there is no strict requirement for these fields)
+- edit `./terraform/main.tf -> domain_map` to add hosts and connections between them (`ip` and `cidr` are needed for dnsmasq DHCP server on the first network defined in `net` array)
 - add config file to `./ansible/dev/`
 - add subnet to `./ansible/inventory.ini` (do not `ansible_host` already defined machines)
 - add config file to `./ansible/imports.yaml`
