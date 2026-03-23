@@ -1,0 +1,20 @@
+---
+- name: configure host
+  hosts:
+    - R12
+  connection: network_cli
+  gather_facts: false
+  tasks:
+    - name: set identity
+      community.routeros.command:
+        commands:
+          - /system identity set name=R12
+    - name: adjust console settings
+      community.routeros.command:
+        commands:
+          - /system console screen set blank-interval=never line-count=40
+
+    - name: assign addresses
+      community.routeros.command:
+        commands:
+          - /ip address add address=172.16.0.12/24 interface=ether2 network=172.16.0.0

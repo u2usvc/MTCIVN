@@ -52,6 +52,13 @@
         commands:
           - /routing bfd configuration add interfaces=ether2,ether3 min-rx=1s min-tx=1s
 
+    - name: configure MPLS LDP
+      community.routeros.command:
+        commands:
+          - /mpls/ldp/add lsr-id=10.0.0.3 transport-addresses=10.0.0.3
+          - /mpls/ldp/interface/add interface=ether2
+          - /mpls/ldp/interface/add interface=ether3
+
     - name: configure VXLAN
       community.routeros.command:
         commands:
@@ -60,3 +67,11 @@
           - /interface/bridge/add name=vxlan-br-102
           - /interface/bridge/port/add interface=ether4 bridge=vxlan-br-102
           - /interface/bridge/port/add interface=vxlan-vni-102 bridge=vxlan-br-102
+
+    - name: configure VPLS
+      community.routeros.command:
+        commands:
+          - /interface/bridge/add name=vpls-tun-1
+          - /interface/vpls/add name=vpls-tun-3-4 vpls-id=1:1213 peer=10.0.0.4
+          - /interface/bridge/port/add interface=vpls-tun-3-4 bridge=vpls-tun-1
+          - /interface/bridge/port/add interface=ether5 bridge=vpls-tun-1

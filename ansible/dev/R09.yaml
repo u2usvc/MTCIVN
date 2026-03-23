@@ -51,3 +51,10 @@
           community.routeros.command:
             commands:
               - /routing bfd configuration add interfaces=ether2 min-rx=1s min-tx=1s
+
+    - name: configure MPLS LDP
+      community.routeros.command:
+        commands:
+          - /mpls/ldp/add lsr-id=10.0.0.9 transport-addresses=10.0.0.9
+          - /mpls/ldp/interface/add interface=ether2
+          - /mpls/ldp/interface/add interface=ether3
