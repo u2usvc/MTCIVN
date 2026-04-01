@@ -13,3 +13,7 @@
 - import_playbook: dev/R02.yaml
 - import_playbook: dev/R12.yaml
 - import_playbook: dev/R13.yaml
+- import_playbook: dev/S01.yaml
+- import_playbook: dev/S02.yaml
+- import_playbook: dev/S03.yaml
+- import_playbook: dev/S04.yaml

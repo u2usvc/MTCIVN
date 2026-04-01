@@ -1,0 +1,20 @@
+---
+- name: configure host
+  hosts:
+    - S03
+  connection: network_cli
+  gather_facts: false
+  tasks:
+    - name: set identity
+      community.routeros.command:
+        commands:
+          - /system identity set name=S03
+    - name: adjust console settings
+      community.routeros.command:
+        commands:
+          - /system console screen set blank-interval=never line-count=40
+
+    - name: configure DHCP client
+      community.routeros.command:
+        commands:
+          - /ip/dhcp-client/add interface=ether2 disabled=no
